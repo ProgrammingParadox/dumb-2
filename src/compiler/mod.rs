@@ -1,4 +1,8 @@
-use crate::lexer::Lexer;
+
+mod lexer;
+
+use std::cmp::PartialEq;
+use lexer::Lexer;
 use crate::token::Token;
 
 use std::io;
@@ -49,11 +53,17 @@ impl Compiler<'_> {
 
         let cur = &self.tokens[self.position];
 
+        if *cur == Token::Loop {
+            // TODO!
+        }
+
         match cur {
             Token::Number(x) => self.push_stack(*x),
             Token::Plus => self.add(),
             Token::Star => self.multiply(),
             Token::Period => self.output(),
+            Token::Pop => self.pop(),
+            Token::Loop => self.run_loop(),
             _ => panic!("Uncovered token {:?}", cur)
         }
 
@@ -74,6 +84,13 @@ impl Compiler<'_> {
         );
     }
 
+    fn run_loop(&mut self) {
+        let iterations = self.stack.pop();
+        // TODO!
+    }
+    fn pop(&mut self) {
+        self.stack.pop();
+    }
     fn add(&mut self) {
         let a: f32 = self.stack.pop().unwrap();
         let b: f32 = self.stack.pop().unwrap();

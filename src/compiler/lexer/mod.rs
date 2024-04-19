@@ -52,11 +52,33 @@ impl Lexer<'_> {
         Ok(Token::Number(number.parse::<f32>().unwrap()))
     }
 
-    // fn eat_word(&mut self) -> Token {
-    //     // TODO!
-    //
-    //     Token::word("")
-    // }
+    fn eat_word(&mut self) -> Token {
+        let mut word = String::new();
+
+        while self.position < self.code.len() {
+            if self.cur.is_ascii_whitespace() || !(self.cur.is_ascii_alphanumeric() || self.cur == '_') {
+                break;
+            }
+
+            word.push(self.cur);
+
+            self.advance();
+        }
+
+        Token::Word(word.into_boxed_str())
+    }
+
+    fn if_keyword_else_word(&mut self, word: Token) -> Option<Token> {
+        if let Token::Word(boxed_name) = word {
+            return Some(match boxed_name.as_ref() {
+                "pop" => Token::Pop,
+                "loop" => Token::Loop,
+                _ => Token::Word(boxed_name)
+            })
+        }
+
+        None
+    }
 
     fn peek(&mut self) -> Option<&u8> {
         self.code.as_bytes().get(self.position + 1)
@@ -76,6 +98,12 @@ impl Lexer<'_> {
 
         if self.cur.is_ascii_digit() {
             return self.eat_number();
+        }
+
+        if self.cur.is_ascii_alphabetic() || self.cur == '_' {
+            let word = self.eat_word();
+
+            return Ok(self.if_keyword_else_word(word).unwrap());
         }
 
         // TODO! Check for, then eat a word, then match the word to a keyword (like pop) Maybe have Token::Keyword(Keyword::Pop)?

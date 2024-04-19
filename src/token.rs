@@ -6,9 +6,15 @@ pub enum Token {
     Plus,   // +
     Minus,  // -
     Period, // .
-    Pop,    // pop
 
-    //Word(str),
+    // may need to implement a parsing abstraction layer to this
+    OpenBracket, // [
+    CloseBracket, // ]
+
+    Pop,    // pop
+    Loop,
+
+    Word(Box<str>),
 
     Number(f32),
 

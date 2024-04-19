@@ -14,7 +14,6 @@
  */
 
 
-mod lexer;
 use crate::compiler::Compiler;
 
 mod token;

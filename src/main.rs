@@ -21,8 +21,13 @@ mod token;
 mod compiler;
 
 fn main() {
-    // program should print (1 + 1), then result * 2
-    Compiler::compile("1 1 + . 2 * .");
+    // this program should print (1 + 1), then result * 2
+    // Compiler::compile("1 1 + . 2 * .");
 
+    /*
+     The program by default activates the repl, where you can type code and get
+     quick results. Talk to your doctor about using a REPL. Side effects include:
+     awesomeness, cool stuff, and responsive exploration.
+     */
     Compiler::repl();
 }

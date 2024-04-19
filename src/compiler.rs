@@ -112,9 +112,14 @@ impl Compiler<'_> {
     }
 
     pub fn repl() {
+        println!("Welcome to the Dumb REPL! Have a look around. Type EXIT to exit.");
+
         let mut binding = Vec::new();
         let mut compiler = Self::new(&mut binding);
         loop {
+            // we *could* just run self.compile for every line, but this way the stack
+            // stays after each line
+
             let mut line = String::new();
             io::stdout().write_all(b"> ").unwrap();
             io::stdout().flush().unwrap();
@@ -163,7 +168,7 @@ impl Compiler<'_> {
             tokens.push(cur);
         }
 
-        println!("Tokens: {:?}", tokens);
+        // println!("Tokens: {:?}", tokens);
 
         let mut compiler = Self::new(&mut tokens);
         while let cur = compiler.eat_expression() {

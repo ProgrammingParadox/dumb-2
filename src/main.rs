@@ -26,7 +26,6 @@ fn main() {
     let mut lexer = Lexer::new(&"1 1 + . 2 * .");
 
     let mut tokens = vec![];
-
     while let cur = lexer.eat_token().unwrap() {
         if cur == Token::EOF {
             break;

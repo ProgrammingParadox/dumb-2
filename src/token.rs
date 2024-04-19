@@ -6,6 +6,9 @@ pub enum Token {
     Plus,   // +
     Minus,  // -
     Period, // .
+    Pop,    // pop
+
+    Word(str),
 
     Number(f32),
 

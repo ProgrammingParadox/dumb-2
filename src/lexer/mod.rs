@@ -52,6 +52,12 @@ impl Lexer<'_> {
         Ok(Token::Number(number.parse::<f32>().unwrap()))
     }
 
+    fn eat_word(&mut self) -> Token {
+        // TODO!
+
+        Token::word("")
+    }
+
     fn peek(&mut self) -> Option<&u8> {
         self.code.as_bytes().get(self.position + 1)
     }
@@ -71,6 +77,8 @@ impl Lexer<'_> {
         if self.cur.is_ascii_digit() {
             return self.eat_number();
         }
+
+        // TODO! Check for, then eat a word, then match the word to a keyword (like pop) Maybe have Token::Keyword(Keyword::Pop)?
 
         return Ok(match self.cur {
             '+' => self.eat_plus(),

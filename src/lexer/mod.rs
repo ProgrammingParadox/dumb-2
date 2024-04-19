@@ -52,11 +52,11 @@ impl Lexer<'_> {
         Ok(Token::Number(number.parse::<f32>().unwrap()))
     }
 
-    fn eat_word(&mut self) -> Token {
-        // TODO!
-
-        Token::word("")
-    }
+    // fn eat_word(&mut self) -> Token {
+    //     // TODO!
+    //
+    //     Token::word("")
+    // }
 
     fn peek(&mut self) -> Option<&u8> {
         self.code.as_bytes().get(self.position + 1)

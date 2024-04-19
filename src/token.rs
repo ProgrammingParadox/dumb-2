@@ -8,7 +8,7 @@ pub enum Token {
     Period, // .
     Pop,    // pop
 
-    Word(str),
+    //Word(str),
 
     Number(f32),
 

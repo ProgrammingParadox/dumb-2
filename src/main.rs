@@ -15,24 +15,14 @@
 
 
 mod lexer;
-use lexer::Lexer;
-use crate::token::Token;
+use crate::compiler::Compiler;
 
 mod token;
-//use token::Token;
+mod compiler;
 
 fn main() {
-    // program should print 1 + 1
-    let mut lexer = Lexer::new(&"1 1+. 2*.");
+    // program should print (1 + 1), then result * 2
+    Compiler::compile("1 1 + . 2 * .");
 
-    let mut tokens = vec![];
-    while let cur = lexer.eat_token().unwrap() {
-        if cur == Token::EOF {
-            break;
-        }
-
-        tokens.push(cur);
-    }
-
-    println!("Tokens: {:?}", tokens);
+    Compiler::repl();
 }

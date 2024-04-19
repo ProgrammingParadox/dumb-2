@@ -34,13 +34,26 @@ impl Lexer<'_> {
     fn eat_number(&mut self) -> Result<Token, u32> {
         let mut number = String::new();
 
-        while self.position < self.code.len() && self.cur.is_ascii_digit() {
+        if self.cur == '-' {
+            number.push('-');
+            self.advance();
+        }
+
+        while self.position < self.code.len() {
+            if !(self.cur.is_ascii_digit() || (self.cur == '.' && !number.contains('.'))) {
+                break;
+            }
+
             number.push(self.cur);
 
             self.advance();
         }
 
-        Ok(Token::Number(number.parse::<i32>().unwrap()))
+        Ok(Token::Number(number.parse::<f32>().unwrap()))
+    }
+
+    fn peek(&mut self) -> Option<&u8> {
+        self.code.as_bytes().get(self.position + 1)
     }
 
     // TODO? Real errors?
@@ -49,6 +62,10 @@ impl Lexer<'_> {
 
         if self.position >= self.code.len() {
             return Ok(Token::EOF)
+        }
+
+        if self.cur == '-' && self.peek().is_some_and(|x| x.is_ascii_digit()) {
+            return self.eat_number();
         }
 
         if self.cur.is_ascii_digit() {
@@ -61,7 +78,7 @@ impl Lexer<'_> {
             '*' => self.eat_star(),
             '/' => self.eat_slash(),
             '.' => self.eat_period(),
-             _  => panic!("Unknown character {}", self.cur)
+             _  => panic!("Unknown character {:?}", self.cur)
         });
     }
 

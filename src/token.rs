@@ -7,7 +7,7 @@ pub enum Token {
     Minus,  // -
     Period, // .
 
-    Number(i32),
+    Number(f32),
 
     EOF,
 }

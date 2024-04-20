@@ -53,9 +53,12 @@ impl Compiler<'_> {
 
         let cur = &self.tokens[self.position];
 
-        if *cur == Token::Loop {
-            // TODO!
-        }
+        // if *cur == Token::Loop {
+        //     self.advance();
+        //     if let Token::Number(x) = &self.tokens[self.position] {
+        //
+        //     }
+        // }
 
         match cur {
             Token::Number(x) => self.push_stack(*x),
@@ -84,6 +87,16 @@ impl Compiler<'_> {
         );
     }
 
+    // TODO!
+    fn eat_block(&mut self) -> Self {
+        let mut compiler = Self::new(&mut Vec::new());
+        while self.position < self.tokens.len() && &self.tokens[self.position] != &Token::CloseBracket {
+            compiler.push_tokens(&mut vec![self.tokens[self.position]]);
+        }
+
+        compiler
+    }
+
     fn run_loop(&mut self) {
         let iterations = self.stack.pop();
         // TODO!
@@ -92,32 +105,32 @@ impl Compiler<'_> {
         self.stack.pop();
     }
     fn add(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a + b;
 
         self.stack.push(result);
     }
     fn multiply(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a * b;
 
         self.stack.push(result);
     }
     fn subtract(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a - b;
 
         self.stack.push(result);
     }
     fn divide(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a / b;
 

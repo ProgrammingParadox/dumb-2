@@ -114,8 +114,21 @@ impl Lexer<'_> {
             '*' => self.eat_star(),
             '/' => self.eat_slash(),
             '.' => self.eat_period(),
+            '[' => self.eat_open_bracket(),
+            ']' => self.eat_close_bracker(),
              _  => panic!("Unknown character {:?}", self.cur)
         });
+    }
+
+    fn eat_open_bracket(&mut self) -> Token {
+        self.advance();
+
+        Token::OpenBracket
+    }
+    fn eat_close_bracket(&mut self) -> Token {
+        self.advance();
+
+        Token::CloseBracket
     }
 
     fn eat_plus(&mut self) -> Token {

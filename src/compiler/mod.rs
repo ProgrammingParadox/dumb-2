@@ -59,6 +59,8 @@ impl Compiler<'_> {
             Token::Plus => self.add(),
             Token::Star => self.multiply(),
             Token::Period => self.output(),
+            Token::Slash => self.divide(),
+            Token::Minus => self.subtract(),
             Token::Pop => self.pop(),
             Token::Backtick => self.output_as_chars(),
             _ => panic!("Uncovered token {:?}", cur)

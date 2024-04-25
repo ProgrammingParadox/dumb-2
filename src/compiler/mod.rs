@@ -98,32 +98,32 @@ impl Compiler<'_> {
         self.stack.pop();
     }
     fn add(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a + b;
 
         self.stack.push(result);
     }
     fn multiply(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a * b;
 
         self.stack.push(result);
     }
     fn subtract(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a - b;
 
         self.stack.push(result);
     }
     fn divide(&mut self) {
-        let a: f32 = self.stack.pop().unwrap();
-        let b: f32 = self.stack.pop().unwrap();
+        let a: f32 = self.stack.pop().or(Some(0.0)).unwrap();
+        let b: f32 = self.stack.pop().or(Some(0.0)).unwrap();
 
         let result: f32 = a / b;
 

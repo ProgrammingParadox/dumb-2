@@ -53,17 +53,14 @@ impl Compiler<'_> {
 
         let cur = &self.tokens[self.position];
 
-        if *cur == Token::Loop {
-            // TODO!
-        }
-
+        // do what you can or panic
         match cur {
             Token::Number(x) => self.push_stack(*x),
             Token::Plus => self.add(),
             Token::Star => self.multiply(),
             Token::Period => self.output(),
             Token::Pop => self.pop(),
-            Token::Loop => self.run_loop(),
+            Token::Backtick => self.output_as_chars(),
             _ => panic!("Uncovered token {:?}", cur)
         }
 
@@ -72,6 +69,7 @@ impl Compiler<'_> {
         CompilerStatus::NotDone
     }
 
+    // basically the print command
     fn output(&mut self) {
         if self.output.len() > 0 {
             self.output.push('\n');
@@ -83,11 +81,19 @@ impl Compiler<'_> {
             .to_string()
         );
     }
-
-    fn run_loop(&mut self) {
-        let iterations = self.stack.pop();
-        // TODO!
+    fn output_as_chars(&mut self) {
+        if self.output.len() > 0 {
+            self.output.push('\n');
+        }
+        self.output += &*((self.stack
+            .last()
+            .or_else(|| panic!("Nothing to print!"))
+            .unwrap().floor().abs() as u8 as char)
+            .to_string()
+        );
     }
+
+    // other operations
     fn pop(&mut self) {
         self.stack.pop();
     }
@@ -128,6 +134,7 @@ impl Compiler<'_> {
         self.stack.push(x);
     }
 
+    // sets up and runs a repl
     pub fn repl() {
         println!("Welcome to the Dumb REPL! Have a look around. Type EXIT to exit.");
 
@@ -173,6 +180,7 @@ impl Compiler<'_> {
         }
     }
 
+    // compile a set of code
     pub fn compile(code: &str) {
         let mut lexer = Lexer::new(code);
 

@@ -8,6 +8,8 @@
 - - subtract "
 / - divide "
 . - print the last number on the stack
+` - print the last number on the stack as a character
+pop - pops the last number off of the stack
 
 <number> - pushes a number onto the stack
 

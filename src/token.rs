@@ -7,12 +7,9 @@ pub enum Token {
     Minus,  // -
     Period, // .
 
-    // may need to implement a parsing abstraction layer to this
-    OpenBracket, // [
-    CloseBracket, // ]
+    Backtick, // `
 
     Pop,    // pop
-    Loop,
 
     Word(Box<str>),
 
